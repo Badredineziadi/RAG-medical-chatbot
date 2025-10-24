@@ -1,0 +1,159 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🔍 AI Medical Chatbot</title>
+  <style>
+    /* 🌤 Global Styles */
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* 💬 Chat Container */
+    .chat-container {
+      background: white;
+      width: 95%;
+      max-width: 750px;
+      margin: 3rem 0;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1976d2;
+      margin-bottom: 1.5rem;
+    }
+
+    /* 🗨️ Chat Box */
+    #chat-box {
+      max-height: 65vh;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 1rem;
+      background-color: #fafafa;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .user {
+      background-color: #d1e7ff;
+      text-align: right;
+      margin-left: 20%;
+      border-top-right-radius: 0;
+    }
+
+    .assistant {
+      background-color: #f1f1f1;
+      text-align: left;
+      margin-right: 20%;
+      border-top-left-radius: 0;
+    }
+
+    .message strong {
+      color: #0d47a1;
+      font-size: 0.95rem;
+    }
+
+    /* 🧾 Forms */
+    form {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    textarea {
+      width: 100%;
+      height: 3.5rem;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #bdbdbd;
+      border-radius: 8px;
+      resize: none;
+      transition: all 0.2s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #1976d2;
+      box-shadow: 0 0 4px rgba(25, 118, 210, 0.3);
+    }
+
+    button {
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 0.75rem;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #1565c0;
+    }
+
+    .clear-btn {
+      background-color: #e53935;
+      margin-left: 0.5rem;
+    }
+
+    .clear-btn:hover {
+      background-color: #c62828;
+    }
+
+    .error {
+      color: #d32f2f;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <h1>🔍 AI Medical Chatbot</h1>
+
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <div id="chat-box">
+      {% for msg in messages %}
+        <div class="message {{ msg.role }}">
+          <strong>{{ msg.role|capitalize }}:</strong><br />
+          {{ msg.content | safe | nl2br }}
+        </div>
+      {% endfor %}
+    </div>
+
+    <form method="post" action="{{ url_for('index') }}">
+      <textarea name="prompt" placeholder="Ask a medical question..." required></textarea><br />
+      <button type="submit">Send</button>
+      <button type="submit" formaction="{{ url_for('clear') }}" class="clear-btn">Clear Chat</button>
+    </form>
+  </div>
+</body>
+</html>
