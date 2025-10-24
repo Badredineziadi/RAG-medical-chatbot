@@ -1,0 +1,6 @@
+venv/
+logs/
+*.log
+vectorstore/
+RAG_Medcal_Chatbot.egg-info/
+.env
