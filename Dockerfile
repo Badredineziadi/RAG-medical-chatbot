@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 COPY . .
 
 ## Install Python dependencies
-RUN pip install --no-cache-dir -e .
+RUN pip install --no-cache-dir .
 
 ## Expose only flask port
 EXPOSE 5000
